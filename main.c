@@ -19,6 +19,7 @@ void main(void)
     for(;;){
         //code begin
         motor1(5000);
+
 //        led_toggle(LED_R_F);
 //        delay_ms(50);
 //        if(key_down) led_on(LED_R_F);
