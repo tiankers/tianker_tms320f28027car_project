@@ -16,9 +16,11 @@ void main(void)
     time_pie_us(myTimer0, 1000000);
     //ÖÐ¶Ï
     pie_init();
+
     for(;;){
         //code begin
-        motor1(5000);
+        motor1(2000);
+        motor2(2000);
 
 //        led_toggle(LED_R_F);
 //        delay_ms(50);
