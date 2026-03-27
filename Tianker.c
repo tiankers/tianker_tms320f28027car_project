@@ -21,6 +21,8 @@ TIMER_Handle myTimer0;
 TIMER_Handle myTimer1;
 TIMER_Handle myTimer2;
 
+uint32_t ms = 0;
+
 void config(void){
     myCpu = CPU_init((void *)NULL, sizeof(CPU_Obj));
     myWDog = WDOG_init((void *)WDOG_BASE_ADDR, sizeof(WDOG_Obj));

@@ -8,6 +8,8 @@
 #ifndef TIANKER_H_
 #define TIANKER_H_
 
+#define XY(x, y)            ((x > y) ? (x - y) : (y - x))
+
 //¹Ù·½Çý¶¯²ã
 #include "F2802x_Component/include/adc.h"
 #include "F2802x_Component/include/clk.h"
@@ -44,6 +46,8 @@ extern GPIO_Handle myGpio;
 extern TIMER_Handle myTimer0;
 extern TIMER_Handle myTimer1;
 extern TIMER_Handle myTimer2;
+
+extern uint32_t ms;
 
 void config(void);
 

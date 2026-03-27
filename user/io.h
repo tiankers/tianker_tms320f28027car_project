@@ -21,7 +21,11 @@
 #define led_toggle(led)		GPIO_toggle(myGpio, led)
 
 extern GPIO_Number_e led[4];
+extern bool half_flag;
 
 void io_init(void);
+void all_led_on(void);
+void all_led_off(void);
+void half_led(void);
 
 #endif /* USER_IO_H_ */

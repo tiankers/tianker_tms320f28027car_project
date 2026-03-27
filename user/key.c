@@ -7,6 +7,63 @@
 #include "key.h"
 
 KEY_X KEY_1;
+uint16_t gn_id = 0;
+
+void key_even(KEY_X* key_x) {
+    switch (key_x->key_even) {
+        case ONE_DOWN:
+            //处理单击事件
+            gn_id = 1;
+            half_flag = !half_flag;
+            key_x->key_even = DONE;
+            break;
+        case TWO_DOWN:
+            //处理双击事件
+            gn_id = 2;
+            key_x->key_even = DONE;
+            break;
+        case LONG_DOWN:
+            //
+            gn_id = 3;
+            key_x->key_even = DONE;
+			break;
+        case DONE:
+            return;
+        default:
+            key_x->key_even = DONE;
+			break;
+    }
+}
+
+void key_get(KEY_X *key_x){
+    if(key_down && !key_x->down_flag && XY(ms, key_x->up_ms) > UP_DOWN_TIME){
+        key_x->down_flag = 1;
+        key_x->down_ms = ms;
+    }
+    if(!key_down && key_x->down_flag && XY(ms, key_x->down_ms) > UP_DOWN_TIME){
+		key_x->last_up = key_x->up_ms;//记录上次按键抬起时间
+        key_x->down_flag = 0;
+        key_x->up_ms = ms;
+		key_x->even_flag = 1;
+    }
+    if(key_x->up_ms > key_x->down_ms && key_x->even_flag){
+        if(XY(key_x->up_ms, key_x->down_ms) > LONG_DOWN_TIME){
+            key_x->key_even = LONG_DOWN;
+        }else if(XY(key_x->up_ms, key_x->down_ms) > SHORT_DOWN_TIME){
+            key_x->key_even = SHORT_DOWN;
+        }
+        key_x->even_flag = 0;
+    }
+    if (key_x->key_even == SHORT_DOWN) {
+		//如果上次按键事件是短按，并且这次按键按下的时间与上次抬起的时间间隔小于TWE_DOWN_TIME，则认为是双击事件
+        if (XY(key_x->down_ms, key_x->last_up) < TWE_DOWN_TIME && key_x->last_even == ONE_DOWN) {
+            key_x->key_even = TWO_DOWN;
+        } else {
+            key_x->key_even = ONE_DOWN;
+		}
+    }
+	if(key_x->key_even != DONE) key_x->last_even = key_x->key_even;//记录上次按键事件类型
+}
 
 void key_init(void){
     GPIO_setMode(myGpio, key_1, GPIO_12_Mode_GeneralPurpose);
@@ -19,4 +76,8 @@ void key_init(void){
 	GPIO_setQualificationPeriod(myGpio, key_1, 255);//采样周期为255个时钟周期（0.1~0.3ms*6）
 
 	key_pie = 1;//使能按键中断
+
+	KEY_1.key_even = DONE;
+	KEY_1.down_flag = 0;
+	KEY_1.key_num = 1;
 }

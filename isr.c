@@ -25,7 +25,13 @@ interrupt void KEY_XINT1_isr(void){
 }
 
 interrupt void timer0_isr(void){
-    //led_toggle(LED_R_F);
+    ++ms;
+    static uint32_t kkk = 0;
+    if(ms - kkk > 10){
+        key_get(&KEY_1);
+        kkk = ms;
+    }
+    key_even(&KEY_1);
 
     PIE_clearInt(myPie, PIE_GroupNumber_1);
 }

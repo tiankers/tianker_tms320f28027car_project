@@ -15,42 +15,61 @@ void main(void)
     motor_init();
     hw_init();
 
-    time_pie_us(myTimer0, 1000000);
+    time_pie_us(myTimer0, 1000);
     //ÖÐ¶Ï
     pie_init();
-    int16_t i;
     for(;;){
         //code begin
-        switch(led_flag)
-		{
-		case 0: 
-            for (i = 0; i < 4; ++i) {
-                led_on(led[i]);
-                if (i) led_off(led[i - 1]);
-				else led_off(led[3]);
-                delay_ms(500);
-            }
-            break;
+        switch (gn_id) {
+            case 1:
+                half_led();
+                break;
+            case 2:
+                all_led_on();
+                break;
+            case 3:
+				all_led_off();
+                break;
+			default:
+				break;
+        }
 
-		case 1: 
-            for (i = 0; i < 4; ++i) {
-                led_on(led[i]);
-            }
-            break;
+		//if (KEY_1.key_even == TWO_DOWN) {
+  //          for (i = 0; i < 4; ++i) {
+  //              led_on(led[i]);
+  //              if (i) led_off(led[i - 1]);
 
-		case 2: 
-            for (i = 0; i < 4; ++i) {
-                led_off(led[i]);
-            }
-            break;
 
-		case 3: 
-            break;
-
-		default: 
-            break;
-
-		}
+//        switch(led_flag)
+//		{
+//		case 0:
+//            for (i = 0; i < 4; ++i) {
+//                led_on(led[i]);
+//                if (i) led_off(led[i - 1]);
+//				else led_off(led[3]);
+//                delay_ms(500);
+//            }
+//            break;
+//
+//		case 1:
+//            for (i = 0; i < 4; ++i) {
+//                led_on(led[i]);
+//            }
+//            break;
+//
+//		case 2:
+//            for (i = 0; i < 4; ++i) {
+//                led_off(led[i]);
+//            }
+//            break;
+//
+//		case 3:
+//            break;
+//
+//		default:
+//            break;
+//
+//		}
 
 
         if(motor_flag){

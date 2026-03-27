@@ -7,6 +7,35 @@
 #include "io.h"
 
 GPIO_Number_e led[4] = {LED_R_B, LED_L_B, LED_R_F, LED_L_F};
+bool half_flag = 0;
+
+void half_led(void) {
+    if (half_flag) {
+        led_on(LED_R_B);
+        led_on(LED_L_B);
+        led_off(LED_R_F);
+        led_off(LED_L_F);
+    } else {
+        led_off(LED_R_B);
+        led_off(LED_L_B);
+        led_on(LED_R_F);
+		led_on(LED_L_F);
+    }
+}
+
+void all_led_on(void) {
+    uint16_t i;
+    for (i = 0; i < 4; ++i) {
+        led_on(led[i]);
+    }
+}
+
+void all_led_off(void) {
+    uint16_t i;
+    for (i = 0; i < 4; ++i) {
+        led_off(led[i]);
+	}
+}
 
 void io_init(void){
 	//设置GPIO为通用输入输出模式
