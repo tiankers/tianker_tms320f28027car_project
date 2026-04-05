@@ -32,6 +32,11 @@ interrupt void timer0_isr(void){
         kkk = ms;
     }
     key_even(&KEY_1);
+    uint16_t i = 0;
+    for (; i < 7; ++i) {
+        adc_val[i] = ADC_readResult(myAdc, (ADC_ResultNumber_e)(i + 1));
+    }
+    a5 = ADC_readResult(myAdc, ADC_ResultNumber_0);
 
     PIE_clearInt(myPie, PIE_GroupNumber_1);
 }
