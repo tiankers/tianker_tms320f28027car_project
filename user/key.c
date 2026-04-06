@@ -36,7 +36,38 @@ void key_even(KEY_X* key_x) {
 }
 
 void key_get(KEY_X *key_x){
-    if(key_down && !key_x->down_flag && XY(ms, key_x->up_ms) > UP_DOWN_TIME){
+    /* 根据按键编号明确读取对应输入，保证每次都给 key_x->down 赋值，
+       避免保留旧值导致逻辑无法触发 */
+    switch (key_x->key_num) {
+        case 1:
+            key_x->down = key_down; // GPIO 按键
+            break;
+        case 2:
+            // ADC 判定（恢复注释前的阈值判断）
+            if (adc_val[7] < 3800 && adc_val[7] > 3000)
+                key_x->down = 1;
+            else
+                key_x->down = 0;
+            break;
+        case 3:
+            if (adc_val[7] < 4080 && adc_val[7] > 4000)
+                key_x->down = 1;
+            else
+                key_x->down = 0;
+            break;
+        default:
+            /* 如果 key_num 未按预期设置，保守地读取 GPIO 状态，避免按键永远不变 */
+            key_x->down = key_down;
+            break;
+    }
+//    else if(key_x ->key_num == 2){
+//        if(adc_val[7] < 3800 && adc_val[7] > 3000) key_x->down = 1;
+//        else key_x->down = 0;
+//    }else if(key_x ->key_num == 3){
+//        if(adc_val[7] < 4080 && adc_val[7] > 4000) key_x->down = 1;
+//        else key_x->down = 0;
+//    }
+    if(key_x->down && !key_x->down_flag && XY(ms, key_x->up_ms) > UP_DOWN_TIME){
         key_x->down_flag = 1;
         key_x->down_ms = ms;
     }
@@ -81,4 +112,10 @@ void key_init(void){
 	KEY_1.key_even = DONE;
 	KEY_1.down_flag = 0;
 	KEY_1.key_num = 1;
+    KEY_2.key_even = DONE;
+    KEY_2.down_flag = 0;
+    KEY_2.key_num = 2;
+    KEY_3.key_even = DONE;
+    KEY_3.down_flag = 0;
+    KEY_3.key_num = 3;
 }
