@@ -35,6 +35,7 @@ typedef struct _KEY_X_
 {
     uint16_t key_num;
     bool down_flag;
+    bool down;
 	bool even_flag;
     KEY_EVEN key_even;
     KEY_EVEN last_even;
@@ -44,6 +45,8 @@ typedef struct _KEY_X_
 } KEY_X;
 
 extern KEY_X KEY_1;
+extern KEY_X KEY_2;
+extern KEY_X KEY_3;
 
 void key_init(void);
 void key_get(KEY_X *key_x);

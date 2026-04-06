@@ -8,7 +8,7 @@
 #include "adc_hw.h"
 
 ADC_SocChanNumber_e adc_pin[7];
-uint16_t adc_val[7];
+uint16_t adc_val[8];
 uint16_t a5;
 
 void adc_init(void) {

@@ -18,15 +18,31 @@ interrupt void timer0_isr(void){
     ++ms;
     static uint32_t kkk = 0;
     if(ms - kkk > 10){
+        //
+        uint16_t i = 0;
+        for (; i < 8; ++i) {
+            adc_val[i] = ADC_readResult(myAdc, (ADC_ResultNumber_e)(i + 1));
+        }
+        a5 = ADC_readResult(myAdc, ADC_ResultNumber_0);
+        //
+
+        KEY_1.down = key_down;
+        if (adc_val[7] < 3800 && adc_val[7] > 3000)
+            KEY_2.down = 1;
+        else if (adc_val[7] < 4080 && adc_val[7] > 4000)
+            KEY_3.down = 1;
+        else{
+            KEY_2.down = 0;
+            KEY_3.down = 0;
+        }
         key_get(&KEY_1);
+        key_get(&KEY_2);
+        key_get(&KEY_3);
         kkk = ms;
     }
     key_even(&KEY_1);
-    uint16_t i = 0;
-    for (; i < 7; ++i) {
-        adc_val[i] = ADC_readResult(myAdc, (ADC_ResultNumber_e)(i + 1));
-    }
-    a5 = ADC_readResult(myAdc, ADC_ResultNumber_0);
+    key_even(&KEY_2);
+    key_even(&KEY_3);
 
     PIE_clearInt(myPie, PIE_GroupNumber_1);
 }
