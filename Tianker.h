@@ -33,6 +33,7 @@
 #include "adc_hw.h"
 #include "csb.h"
 #include "uart.h"
+#include "jdy.h"
 
 extern CLK_Handle myClk;
 extern CPU_Handle myCpu;

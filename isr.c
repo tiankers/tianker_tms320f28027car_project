@@ -27,7 +27,7 @@ interrupt void timer0_isr(void){
     if(ms - kkk > 10){
         //
         uint16_t i = 0;
-        for (; i < 8; ++i) {
+        for (; i < 15; ++i) {
             adc_val[i] = ADC_readResult(myAdc, (ADC_ResultNumber_e)(i + 1));
         }
         a5 = ADC_readResult(myAdc, ADC_ResultNumber_0);

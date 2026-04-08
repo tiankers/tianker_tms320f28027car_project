@@ -22,7 +22,7 @@
 #define HW_r_1          (6)
 
 extern ADC_SocChanNumber_e adc_pin[7];
-extern uint16_t adc_val[8];
+extern uint16_t adc_val[16];
 extern uint16_t a5;
 
 void adc_init(void);

@@ -40,7 +40,7 @@ void main(void)
     hw_init();
     csb_init();
     uart_init();
-
+    jdy_init();
     time_pie_us(myTimer0, 1000);
     time_pie_us(myTimer1, 10);
     //time_pie_us(myTimer2, 7);

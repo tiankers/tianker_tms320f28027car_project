@@ -1,0 +1,17 @@
+GPIO口配置首先使用GPIO_setMode写入GPIO口的工作模式：
+void GPIO_setMode(GPIO_Handle gpioHandle				句柄
+, const GPIO_Number_e gpioNumber						io口编号，符合GPIO_Number_x 部分引脚无法使用
+, const GPIO_Mode_e mode								模式，详见GPIO_Mode_e声明，常用GPIO_x_Mode_GeneralPurpose
+)
+其次决定是否使用内部上拉电阻，正常在io口悬空时不需要保持高电平则不打开，或使用外部上拉电阻。
+    如GPIO_setPullUp(myGpio, GPIO_Number_x, GPIO_PullUp_Disable);
+然后配置输入输出方向，使用GPIO_setDirection函数：
+    如GPIO_setDirection(myGpio, GPIO_Number_x, GPIO_Direction_Output/GPIO_Direction_Input);
+若为输出口，则功能配置到此为止；若为输入口，则还需配置输入信号的检测方式，
+    详见key.c第94行：异步检测直接响应较为灵敏，或95/97行的同步检测，需打开时钟总线，且响应较慢，但更为稳定有一定滤波作用。
+
+功能函数如下
+GPIO_setLow(myGpio, GPIO_Number_x)  写入0
+GPIO_setHigh(myGpio, GPIO_Number_x) 写入1
+GPIO_toggle(myGpio, GPIO_Number_x)  翻转0/1
+GPIO_getData(myGpio, GPIO_Number_x)  读取当前io口电平
