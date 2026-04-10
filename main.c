@@ -43,7 +43,8 @@ void main(void)
     jdy_init();
     time_pie_us(myTimer0, 1000);
     time_pie_us(myTimer1, 10);
-    //time_pie_us(myTimer2, 7);
+    time_pie_us(myTimer2, 10000);
+
     //ÖÐ¶Ï
     pie_init();
     for(;;){

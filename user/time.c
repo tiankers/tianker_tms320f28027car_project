@@ -7,7 +7,6 @@
 #include "time.h"
 
 uint32_t time1_us = 0;
-uint32_t time2_us = 0;
 
 void timer_init(TIMER_Handle Timerx, uint32_t us){
     TIMER_stop(Timerx);

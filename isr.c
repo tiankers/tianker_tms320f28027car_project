@@ -23,25 +23,6 @@ interrupt void rx_isr(void) {
 
 interrupt void timer0_isr(void){
     ++ms;
-    static uint32_t kkk = 0;
-    if(ms - kkk > 10){
-        //
-        uint16_t i = 0;
-        for (; i < 15; ++i) {
-            adc_val[i] = ADC_readResult(myAdc, (ADC_ResultNumber_e)(i + 1));
-        }
-        a5 = ADC_readResult(myAdc, ADC_ResultNumber_0);
-        //
-        get_key_down();
-        key_get(&KEY_1);
-        key_get(&KEY_2);
-        key_get(&KEY_3);
-        key_even(&KEY_1);
-        key_even(&KEY_2);
-        key_even(&KEY_3);
-        //
-        kkk = ms;
-    }
 
     if (delay_flag > 0) {
         --delay_flag;
@@ -55,7 +36,21 @@ interrupt void timer1_isr(void) {
 }
 
 interrupt void timer2_isr(void) {
-    time2_us++;
+    //
+    uint16_t i = 0;
+    for (; i < 15; ++i) {
+        adc_val[i] = ADC_readResult(myAdc, (ADC_ResultNumber_e)(i + 1));
+    }
+    a5 = ADC_readResult(myAdc, ADC_ResultNumber_0);
+    //
+    get_key_down();
+    key_get(&KEY_1);
+    key_get(&KEY_3);
+    key_get(&KEY_2);
+    key_even(&KEY_1);
+    key_even(&KEY_2);
+    key_even(&KEY_3);
+    //
 }
 
 interrupt void pwm3(void){
