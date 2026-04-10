@@ -12,6 +12,9 @@
 
 #define ONE_MS  1240
 
+extern uint16_t delay_flag;
+
 void delay_ms(uint16_t ms);
+void time_delay_ms(uint16_t ms);
 
 #endif /* USER_DELAY_H_ */

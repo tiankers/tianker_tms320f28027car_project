@@ -43,6 +43,10 @@ interrupt void timer0_isr(void){
         kkk = ms;
     }
 
+    if (delay_flag > 0) {
+        --delay_flag;
+    }
+
     PIE_clearInt(myPie, PIE_GroupNumber_1);
 }
 
